@@ -1,27 +1,27 @@
 *****************************************************************************
-**	This is the Service Description plugin for the Moodle platform.
-**	The purpose of this package is to offer a JSON structure describing
-**	the services available on the [Moodle platform](http://www.moodle.org).
-**	Please read the descriptions below on how to include additional
-**	services. Static service descriptions are possible as well.
-**	
-**	Moodle is free software: you can redistribute it and/or modify
-**	it under the terms of the GNU General Public License as published by
-**	the Free Software Foundation, either version 3 of the License, or
-**	(at your option) any later version.
-**	
-**	Moodle is distributed in the hope that it will be useful,
-**	but WITHOUT ANY WARRANTY; without even the implied warranty of
-**	MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-**	GNU General Public License for more details.
-**	
-**	You should have received a copy of the GNU General Public License
-**	along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
-**	
-**	
-**	@package   local_rsd
-**	@copyright 2016, Goran Josic <goran.josic@usi.ch>
-**	@license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
+This is the Service Description plugin for the Moodle platform.
+The purpose of this package is to offer a JSON structure describing
+the services available on the [Moodle platform](http://www.moodle.org).
+Please read the descriptions below on how to include additional
+services. Static service descriptions are possible as well.
+
+Moodle is free software: you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
+
+Moodle is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
+
+
+@package   local_rsd
+@copyright 2016, Goran Josic <goran.josic@usi.ch>
+@license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
 *****************************************************************************
 
 To add a new service description to the package please follow these steps:
