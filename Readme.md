@@ -19,8 +19,8 @@ You should have received a copy of the GNU General Public License
 along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 
-copyright 2016, Goran Josic <goran.josic@usi.ch>
-license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
+Copyright: 2016, Goran Josic <goran.josic@usi.ch>.
+License: http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later.
 *****************************************************************************
 
 To add a new service description to the package please follow these steps:
