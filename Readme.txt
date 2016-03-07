@@ -37,37 +37,37 @@ To add a new service description to the package please follow these steps:
    the following array structure:
 
 ```php
-	array(
-		'engine' => array(
-			'type' => 'Moodle',
-			'version' => $CFG->release,
-			'name' => 'Moodle',
-			'link' => $CFG->wwwroot
-		),
-		'services' => array(
-			array(
-				'service' => array(
-					'servicename' => 'My additional service',
-					'servicelink' => 'http://myplatform/service_url.php',
-					'version' => '12345',
-					'protocol' => 'your transport protocol'
+array(
+	'engine' => array(
+		'type' => 'Moodle',
+		'version' => $CFG->release,
+		'name' => 'Moodle',
+		'link' => $CFG->wwwroot
+	),
+	'services' => array(
+		array(
+			'service' => array(
+				'servicename' => 'My additional service',
+				'servicelink' => 'http://myplatform/service_url.php',
+				'version' => '12345',
+				'protocol' => 'your transport protocol'
+			),
+			'apis' => array(
+				array(
+					'name' => 'service name 1'
+					'description' => 'the service name 1 provides bla bla'
 				),
-				'apis' => array(
-					array(
-						'name' => 'service name 1'
-						'description' => 'the service name 1 provides bla bla'
-					),
-					array(
-						'name' => 'service name 2'
-						'description' => 'the service name 2 provides bla bla'
-					),
-					...
-					...
-					...
-				)
+				array(
+					'name' => 'service name 2'
+					'description' => 'the service name 2 provides bla bla'
+				),
+				...
+				...
+				...
 			)
 		)
 	)
+)
 ```
 
 Note: The engine part can be something different than Moodle.
