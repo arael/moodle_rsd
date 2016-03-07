@@ -79,3 +79,9 @@ As an functioning example please check the web_services/rsd.php.
 The class web_services_rsd describes all the active web services on the
 moodle instance.
 
+*****************************************************************************
+To install: Clone the code in the MOODLE_ROOT/local/rsd directory and check
+the Notifications page as administrator.
+
+*****************************************************************************
+
