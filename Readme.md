@@ -20,6 +20,7 @@ along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 
 Copyright: 2016, Goran Josic <goran.josic@usi.ch>.
+
 License: http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later.
 *****************************************************************************
 
