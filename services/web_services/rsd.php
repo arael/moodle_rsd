@@ -61,9 +61,4 @@ class web_services_rsd {
 		return $output;
 	}
 }
-
-/* header('Content-type: application/json'); */
-/* echo json_encode($output); */
-/* return json_encode($output); */
-/* $service_description[] = $output; */
 ?>
