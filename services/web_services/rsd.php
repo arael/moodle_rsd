@@ -9,12 +9,8 @@ require_once($CFG->dirroot . '/admin/webservice/forms.php');
 class web_services_rsd {
 	public static function get_service_description($service, $protocol) {
 		global $CFG;
-		/* return $service; */
 		$webservicemanager = new webservice();
 		$functions = $webservicemanager->get_external_functions($service->id);
-		/* return $functions[8]; // inspect the function info field */
-		/* $function_info = external_function_info($functions[8]); */
-		/* return $function_info; // inspect the function info field */
 		$functions_details = array();
 		foreach($functions as $function) {
 			$info = external_function_info($function);
