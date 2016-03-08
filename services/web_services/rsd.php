@@ -4,8 +4,6 @@ require_once($CFG->libdir . '/adminlib.php');
 require_once($CFG->libdir . '/externallib.php');
 require_once($CFG->dirroot . '/webservice/lib.php');
 require_once($CFG->dirroot . '/admin/webservice/forms.php');
-// rsd local lib
-/* require_once('lib.php'); */
 
 
 class web_services_rsd {
