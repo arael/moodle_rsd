@@ -23,9 +23,7 @@ class web_services_rsd {
 		return array(
 			'service' => array(
 				'servicename' => $service->name,
-				'servicelink' => $CFG->wwwroot . "/webservice/$protocol/server.php",
-				'version' => $CFG->release,
-				'protocol' => $protocol
+				'version' => $CFG->release
 			),
 			'apis' => $function_details
 		);
@@ -48,9 +46,13 @@ class web_services_rsd {
 			'services' => array()
 		);
 		foreach($services as $service) {
+			$service_description = self::get_service_description($service);
+			$service_description["service"]["servicelinks"] = array();
+			$service_description["service"]["protocols"] = $active_protocols;
 			foreach($active_protocols as $protocol) {
-				$output['services'][] = self::get_service_description($service, $protocol);
+				$service_description["service"]["servicelinks"][$protocol] = $CFG->wwwroot . "/webservice/$protocol/server.php";
 			}
+			$output['services'][] = $service_description;
 		}
 		return $output;
 	}
