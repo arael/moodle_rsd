@@ -10,7 +10,7 @@ This specification diverts from the original XML-based specifications in three d
 
 1. It adds information on the transport protocol.
 2. It allows an attribute-free syntax.
-3. It discribes the discorvery process
+3. It describes the discovery process
 
 ## Table of Contents
 
@@ -23,7 +23,7 @@ This specification diverts from the original XML-based specifications in three d
 
 ## The Problem
 
-> Communicating with services requires knowledge about the serivce whereabouts and settings.
+> Communicating with services requires knowledge about the service whereabouts and settings.
 > Specifically, discovering the "Path To Service" setting, but more generally where to point for services is a common issue.
 
 From [RSD specification 1.0.0](https://github.com/danielberlinger/rsd).
@@ -37,7 +37,7 @@ If a service may support different versions of the same protocol, the client may
 
 ### Why is there a need for extending the original RSD
 
-The objective of this specificationis to optimise automatic RSD generation in multiple data formats, such as JSON and YAML. Opposite to XML these formats define hierarchical data formats without additional attributes. Therefore, a direct transformation of the original specification to these formats is not possible.
+The objective of this specifications to optimise automatic RSD generation in multiple data formats, such as JSON and YAML. Opposite to XML these formats define hierarchical data formats without additional attributes. Therefore, a direct transformation of the original specification to these formats is not possible.
 
 ## The RSD Approach
 
