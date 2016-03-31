@@ -9,50 +9,40 @@ require_once($CFG->dirroot . '/admin/webservice/forms.php');
 class web_services_rsd {
 	public static function get_service_description($service, $protocol) {
 		global $CFG;
+		$output = array(
+			'engineName' => 'Moodle',
+			'engineId' => $service->name,
+			'engineLink' => 'webservice/',
+			'homePageLink' => $CFG->wwwroot . DIRECTORY_SEPARATOR,
+			'apis' => array()
+		);
+
 		$webservicemanager = new webservice();
 		$functions = $webservicemanager->get_external_functions($service->id);
 		$functions_details = array();
 		foreach($functions as $function) {
 			$info = external_function_info($function);
-			$function_details[] = array(
-				'name' => $info->name,
-				/* 'link' => '?wsfunction='.$info->name, */
-				'description' => $info->description
+			$function_details[$info->name] = array(
+				'notes' => $info->description,
+				'apiVersion' => $CFG->release,
+				'apiLink' => $protocol . DIRECTORY_SEPARATOR . 'server.php',
+				'transport' => array($protocol)
 			);
 		}
-		return array(
-			'service' => array(
-				'servicename' => $service->name,
-				'version' => $CFG->release
-			),
-			'apis' => $function_details
-		);
+		$output['apis'] = $function_details;
+		return $output;
 	}
 
 	public static function describe() {
 		global $DB, $CFG;
 		// get all enabled web services
+		$transport_protocols = empty($CFG->webserviceprotocols) ?  array() : explode(',', $CFG->webserviceprotocols);
 		$services = $DB->get_records('external_services', array('enabled' => 1));
-
-		$active_protocols = empty($CFG->webserviceprotocols) ?  array() : explode(',', $CFG->webserviceprotocols);
-
-		$output = array(
-			'engine' => array(
-				'type' => 'Moodle',
-				'version' => $CFG->release,
-				'name' => 'Moodle',
-				'link' => $CFG->wwwroot
-			),
-			'services' => array()
-		);
+		$output = array();
 		foreach($services as $service) {
-			$service_description = self::get_service_description($service);
-			$service_description["service"]["servicelinks"] = array();
-			$service_description["service"]["protocols"] = $active_protocols;
-			foreach($active_protocols as $protocol) {
-				$service_description["service"]["servicelinks"][$protocol] = $CFG->wwwroot . "/webservice/$protocol/server.php";
+			foreach($transport_protocols as $protocol) {
+				$output[] = self::get_service_description($service, $protocol);
 			}
-			$output['services'][] = $service_description;
 		}
 		return $output;
 	}
