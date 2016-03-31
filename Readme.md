@@ -30,11 +30,11 @@ directories that contain the rsd.php file.
 
 The Mechanism steps are the following:
 - Moodle root and local directory are scanned for directories which contain rsd.php files inside.
-- The rsd.php files contain no functions only code used for creating the service description.
+- The rsd.php files contain no functions only code used for creating the service apis.
 - The rsd.php file is included in a function to encapsulate the code execution and to restrict the scope.
-- In the rds.php code the array $description is created.
-- The array $description is used for storing the service info.
-- The resulting $description content is appended to the final output.
+- In the rds.php code the array $apis is created.
+- The array $apis is used for storing the service function descriptions.
+- The resulting $apis content is appended to the final output.
 
 Please check the list.php file for details. It should be easy enought to understand.
 

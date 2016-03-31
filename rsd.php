@@ -30,9 +30,8 @@
 // then available for further usage.
 //*******************************************************************
 
-global $DB, $CFG;
-
 require_once('../../config.php');
+global $CFG, $DB;
 require_once($CFG->libdir . '/adminlib.php');
 require_once($CFG->libdir . '/externallib.php');
 require_once($CFG->dirroot . '/webservice/lib.php');
@@ -44,33 +43,25 @@ $services = $DB->get_records('external_services', array('enabled' => 1));
 $transport_protocols = empty($CFG->webserviceprotocols) ?  array() : explode(',', $CFG->webserviceprotocols);
 
 // this array contains all the service description entries
-$description = array();
+$apis = array();
 
 foreach($services as $service) {
 	foreach($transport_protocols as $protocol) {
-		$engine = array(
-			'engineName' => 'Moodle',
-			'engineId' => $service->name,
-			'engineLink' => 'webservice/',
-			'homePageLink' => $CFG->wwwroot . DIRECTORY_SEPARATOR,
-			'apis' => array()
-		);
-
+		$api_entry = array();
 		$webservicemanager = new webservice();
 		// get the webservice functions
 		$functions = $webservicemanager->get_external_functions($service->id);
 		foreach($functions as $function) {
 			$info = external_function_info($function);
-			$apis[$info->name] = array(
+			$api_entry[$info->name] = array(
 				'notes' => $info->description,
 				'apiVersion' => $CFG->release,
 				'apiLink' => $protocol . DIRECTORY_SEPARATOR . 'server.php',
 				'transport' => array($protocol)
 			);
 		}
-		$engine['apis'] = $apis;
 		// append the entry
-		$description[] = $engine;
+		$apis[] = $api_entry;
 	}
 }
 ?>

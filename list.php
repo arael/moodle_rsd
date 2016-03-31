@@ -20,37 +20,46 @@
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
+require_once('../../config.php');
+
+global $CFG;
+
 //*******************************************************************
 // How does this work?
 // Scan all the directories in the moodle root and local folder.
 // If they contains rsd.php include it in the array.
 // Convert the array in JSON and print it as output.
 //*******************************************************************
-
-function extract_description($rsd_path) {
+function extract_apis($rsd_path) {
 	include($rsd_path);
 	// the description element has been initialized in the rsd.php file.
-	return $description;
+	return $apis;
 }
 
 function dirscan($list) {
-	$descriptions = array();
+	$apis = array();
 	foreach($list as $directory) {
 		$iterator = new \DirectoryIterator ( $directory );
 		foreach($iterator as $fileinfo) {
 			if($fileinfo->isDir() && !$fileinfo->isDot()) { // filter files and dot directories
 				$rsd_path = $fileinfo->getPathname().DIRECTORY_SEPARATOR.'rsd.php';
 				if(file_exists($rsd_path)) {
-					$descriptions[] = extract_description($rsd_path);
+					$apis[] = extract_apis($rsd_path);
 				}
 			}
 		}
 	}
-	return $descriptions;
+	return $apis;
 }
 
-$services_descriptions = dirscan(array('../..', '..'));
-/* $services_descriptions = dirscan(array('..')); */
+$services_descriptions = array(
+			'engineName' => 'Moodle',
+			'engineLink' => 'webservice/',
+			'homePageLink' => $CFG->wwwroot . DIRECTORY_SEPARATOR
+		);
+
+
+$services_descriptions['apis'] = dirscan(array('../..', '..'));
 // encode in JSON and print out.
 header('Content-type: application/json');
 echo json_encode($services_descriptions);
