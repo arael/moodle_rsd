@@ -44,7 +44,7 @@ function dirscan($list) {
 			if($fileinfo->isDir() && !$fileinfo->isDot()) { // filter files and dot directories
 				$rsd_path = $fileinfo->getPathname().DIRECTORY_SEPARATOR.'rsd.php';
 				if(file_exists($rsd_path)) {
-					$apis[] = extract_apis($rsd_path);
+					$apis = extract_apis($rsd_path);
 				}
 			}
 		}
@@ -59,7 +59,8 @@ $services_descriptions = array(
 		);
 
 
-$services_descriptions['apis'] = dirscan(array('../..', '..'));
+/* $services_descriptions['apis'] = dirscan(array('../..', '..')); */
+$services_descriptions['apis'] = dirscan(array('..'));
 // encode in JSON and print out.
 header('Content-type: application/json');
 echo json_encode($services_descriptions);
