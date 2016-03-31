@@ -20,38 +20,38 @@
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
-//*************************************************************
+//*******************************************************************
 // How does this work?
-// Scan all the sub directories in the services directory.
+// Scan all the directories in the moodle root and local folder.
 // If they contains rsd.php include it in the array.
 // Convert the array in JSON and print it as output.
-//*************************************************************
+//*******************************************************************
 
-// directory containing all the service descriptions.
-$services = 'services';
-// Scan services directory. Ignore the .. and . entries.
-$scanned_services = array_diff(scandir($services), array('..', '.'));
-
-$services_description = array();
-foreach($scanned_services as $service) {
-	// Check if the entry it is a directory.
-	$path = $services.DIRECTORY_SEPARATOR.$service;
-	if(is_dir($path)) {
-		// Check if the entry contains an rsd.php file.
-		// If the file is a rsd.php include it.
-		$rsd = $path.DIRECTORY_SEPARATOR.'rsd.php';
-		if(file_exists($rsd)) {
-			// include the static class
-			include($rsd);
-			// use the convention service_directory_name + _rsd as class name
-			$class = basename($path).'_rsd';
-			// call the describe function and get the standard array illustrated in services/Readme.txt file
-			$services_description[] = $class::describe();
-		}
-	}
+function extract_description($rsd_path) {
+	include($rsd_path);
+	// the description element has been initialized in the rsd.php file.
+	return $description;
 }
 
+function dirscan($list) {
+	$descriptions = array();
+	foreach($list as $directory) {
+		$iterator = new \DirectoryIterator ( $directory );
+		foreach($iterator as $fileinfo) {
+			if($fileinfo->isDir() && !$fileinfo->isDot()) { // filter files and dot directories
+				$rsd_path = $fileinfo->getPathname().DIRECTORY_SEPARATOR.'rsd.php';
+				if(file_exists($rsd_path)) {
+					$descriptions[] = extract_description($rsd_path);
+				}
+			}
+		}
+	}
+	return $descriptions;
+}
+
+$services_descriptions = dirscan(array('../..', '..'));
+/* $services_descriptions = dirscan(array('..')); */
 // encode in JSON and print out.
 header('Content-type: application/json');
-echo json_encode($services_description);
+echo json_encode($services_descriptions);
 ?>

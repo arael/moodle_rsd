@@ -24,60 +24,19 @@ Copyright: 2016, Goran Josic <goran.josic@usi.ch>.
 License: http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later.
 *****************************************************************************
 
-To add a new service description to the package please follow these steps:
+This is the moodle local plugin for collecting Remote Service Descriptions (RSD).
+The plugin functions by scanning the moodle root and local folder searching for
+directories that contain the rsd.php file.
 
-1. Create a new directory with your service name under "services".
-   For consistency with Moodle naming please use underscores.
-   Examples: my_service, foo_extending_service_yaaay
+The Mechanism steps are the following:
+- Moodle root and local directory are scanned for directories which contain rsd.php files inside.
+- The rsd.php files contain no functions only code used for creating the service description.
+- The rsd.php file is included in a function to encapsulate the code execution and to restrict the scope.
+- In the rds.php code the array $description is created.
+- The array $description is used for storing the service info.
+- The resulting $description content is appended to the final output.
 
-2. Create a rsd.php file inside the directory containing a static class.
-   IMPORTANT: The class should use the convention dirname + _rsd!!
-   Examples: my_service_rsd, foo_extending_service_yaaay_rsd.
-   IMPORTANT: The class should have the describe method that outputs
-   the following array structure:
-
-```php
-array(
-	'engine' => array(
-		'type' => 'Moodle',
-		'version' => $CFG->release,
-		'name' => 'Moodle',
-		'link' => $CFG->wwwroot
-	),
-	'services' => array(
-		array(
-			'service' => array(
-				'servicename' => 'My additional service',
-				'servicelink' => 'http://myplatform/service_url.php',
-				'version' => '12345',
-				'protocol' => 'your transport protocol'
-			),
-			'apis' => array(
-				array(
-					'name' => 'service name 1'
-					'description' => 'the service name 1 provides bla bla'
-				),
-				array(
-					'name' => 'service name 2'
-					'description' => 'the service name 2 provides bla bla'
-				),
-				...
-				...
-				...
-			)
-		)
-	)
-)
-```
-
-Note: The engine part can be something different than Moodle.
-
-After that check the if the RSD output contains your service description
-on: http//yourplatform.url/local/rsd/list.php
-
-As an functioning example please check the web_services/rsd.php.
-The class web_services_rsd describes all the active web services on the
-moodle instance.
+Please check the list.php file for details. It should be easy enought to understand.
 
 *****************************************************************************
 To install: Clone the code in the MOODLE_ROOT/local/rsd directory and check
