@@ -13,7 +13,7 @@
 //
 // You should have received a copy of the GNU General Public License
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
- 
+
 /**
  * @package   local_rsd
  * @copyright 2016, Goran Josic <goran.josic@usi.ch>
@@ -30,8 +30,6 @@
 // then available for further usage.
 //*******************************************************************
 
-require_once('../../config.php');
-global $CFG, $DB;
 require_once($CFG->libdir . '/adminlib.php');
 require_once($CFG->libdir . '/externallib.php');
 require_once($CFG->dirroot . '/webservice/lib.php');
@@ -39,29 +37,33 @@ require_once($CFG->dirroot . '/admin/webservice/forms.php');
 
 // get all enabled web services
 $services = $DB->get_records('external_services', array('enabled' => 1));
+
 // get the list of the active transport protocols
 $transport_protocols = empty($CFG->webserviceprotocols) ?  array() : explode(',', $CFG->webserviceprotocols);
-
-// this array contains all the service description entries
-$apis = array();
 
 foreach($services as $service) {
 	foreach($transport_protocols as $protocol) {
 		$api_entry = array();
 		$webservicemanager = new webservice();
+
 		// get the webservice functions
 		$functions = $webservicemanager->get_external_functions($service->id);
 		foreach($functions as $function) {
 			$info = external_function_info($function);
-			$api_entry[$info->name] = array(
+
+            // create reverse domain notation to the moodle api names
+            // note that because the API Links are different for each protocol,
+            // the services need to have different names
+            $apiName = "org.moodle." . $protocol . "." . $info->name;
+
+            // append the service to the API list
+			$apis[$apiName] = array(
 				'notes' => $info->description,
 				'apiVersion' => $CFG->release,
-				'apiLink' => $protocol . DIRECTORY_SEPARATOR . 'server.php',
+				'apiLink' => 'webservice' . DIRECTORY_SEPARATOR . $protocol . DIRECTORY_SEPARATOR . 'server.php',
 				'transport' => array($protocol)
 			);
 		}
-		// append the entry
-		$apis[] = $api_entry;
 	}
 }
 ?>
