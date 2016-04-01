@@ -38,6 +38,9 @@ The Mechanism steps are the following:
 
 Please check the list.php file for details. It should be easy enought to understand.
 
+When defining the rsd.php files for you services
+please use the [RSD specification](https://github.com/BLC-HTWChur/rsd2-specification/)
+
 *****************************************************************************
 To install: Clone the code in the MOODLE_ROOT/local/rsd directory and check
 the Notifications page as administrator.
