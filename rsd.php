@@ -59,6 +59,7 @@ foreach($services as $service) {
             // append the service to the API list
 			$apis[$apiName] = array(
 				'notes' => $info->description,
+				'engineId' => $service->id,
 				'apiVersion' => $CFG->release,
 				'apiLink' => 'webservice' . DIRECTORY_SEPARATOR . $protocol . DIRECTORY_SEPARATOR . 'server.php',
 				'transport' => array($protocol)
