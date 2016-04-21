@@ -46,7 +46,7 @@ foreach($services as $service) {
 	$apis[$service->shortname] = array(
 		'apiVersion' => $CFG->release,
 		'apiLink' => 'webservice' . DIRECTORY_SEPARATOR,
-		'transport' => array($transport_protocols)
+		'transport' => $transport_protocols
 	);
 }
 ?>
