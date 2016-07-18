@@ -69,19 +69,22 @@ $service_descriptions = array(
 
 // load the web-service APIs for all plugins in the system
 foreach (array($CFG->dirroot,
+               $CFG->dirroot .DIRECTORY_SEPARATOR. 'auth',
                $CFG->dirroot .DIRECTORY_SEPARATOR. 'local') as $dir) {
-    $iterator = new DirectoryIterator($dir);
-    foreach($iterator as $fileinfo) {
-        if($fileinfo->isDir() && !$fileinfo->isDot()) { // filter files and dot directories
-            $rsd_path = $fileinfo->getPathname().DIRECTORY_SEPARATOR.'rsd.php';
-            if(file_exists($rsd_path)) {
-                $localapis = extract_apis($rsd_path,
-                                          $service_descriptions['homePageLink'],
-                                          $service_descriptions['engineLink']);
+    if (!empty($dir)) {
+        $iterator = new DirectoryIterator($dir);
+        foreach($iterator as $fileinfo) {
+            if($fileinfo->isDir() && !$fileinfo->isDot()) { // filter files and dot directories
+                $rsd_path = $fileinfo->getPathname().DIRECTORY_SEPARATOR.'rsd.php';
+                if(file_exists($rsd_path)) {
+                    $localapis = extract_apis($rsd_path,
+                                              $service_descriptions['homePageLink'],
+                                              $service_descriptions['engineLink']);
 
-                // map the plugin APIs into the global list
-                foreach ($localapis as $name => $api) {
-                    $service_descriptions['apis'][$name] = $api;
+                    // map the plugin APIs into the global list
+                    foreach ($localapis as $name => $api) {
+                        $service_descriptions['apis'][$name] = $api;
+                    }
                 }
             }
         }
