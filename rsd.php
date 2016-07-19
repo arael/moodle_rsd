@@ -42,14 +42,14 @@ $services = $DB->get_records('external_services', array('enabled' => 1));
 $transport_protocols = empty($CFG->webserviceprotocols) ?  array() : explode(',', $CFG->webserviceprotocols);
 
 foreach($services as $service) {
-	foreach($transport_protocols as $protocol) {
-		$api_entry = array();
-		$webservicemanager = new webservice();
+    foreach($transport_protocols as $protocol) {
+        $api_entry = array();
+        $webservicemanager = new webservice();
 
-		// get the webservice functions
-		$functions = $webservicemanager->get_external_functions($service->id);
-		foreach($functions as $function) {
-			$info = external_function_info($function);
+        // get the webservice functions
+        $functions = $webservicemanager->get_external_functions($service->id);
+        foreach($functions as $function) {
+            $info = external_api::external_function_info($function);
 
             // create reverse domain notation to the moodle api names
             // note that because the API Links are different for each protocol,
@@ -57,13 +57,13 @@ foreach($services as $service) {
             $apiName = "org.moodle." . $protocol . "." . $info->name;
 
             // append the service to the API list
-			$apis[$apiName] = array(
-				'notes' => $info->description,
-				'apiVersion' => $CFG->release,
-				'apiLink' => 'webservice' . DIRECTORY_SEPARATOR . $protocol . DIRECTORY_SEPARATOR . 'server.php',
-				'transport' => array($protocol)
-			);
-		}
-	}
+            $apis[$apiName] = array(
+                'notes' => $info->description,
+                'apiVersion' => $CFG->release,
+                'apiLink' => 'webservice' . DIRECTORY_SEPARATOR . $protocol . DIRECTORY_SEPARATOR . 'server.php',
+                'transport' => array($protocol)
+            );
+        }
+    }
 }
 ?>
