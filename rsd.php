@@ -41,6 +41,8 @@ $services = $DB->get_records('external_services', array('enabled' => 1));
 // get the list of the active transport protocols
 $transport_protocols = empty($CFG->webserviceprotocols) ?  array() : explode(',', $CFG->webserviceprotocols);
 
+global $CFG;
+
 foreach($services as $service) {
 	foreach($transport_protocols as $protocol) {
 		$api_entry = array();
@@ -49,7 +51,12 @@ foreach($services as $service) {
 		// get the webservice functions
 		$functions = $webservicemanager->get_external_functions($service->id);
 		foreach($functions as $function) {
-			$info = external_function_info($function);
+            if (intval($CFG->version) < 2016052300) {
+                $info = external_function_info($function);
+            }
+            else {
+                $info = externam_api::external_function_info($function);
+            }
 
             // create reverse domain notation to the moodle api names
             // note that because the API Links are different for each protocol,
